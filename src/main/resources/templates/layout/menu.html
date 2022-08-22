@@ -1,0 +1,34 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <nav class="navbar navbar-expand-lg bg-secondary mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" th:href="@{/home/index}">Trang chủ</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <th:block th:if="${#request.remoteUser}">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" th:href="@{/order/list}">Giỏ hàng</a>
+                        </li>
+                        <li class="nav-item" th:if="${#request.isUserInRole('Admin') or #request.isUserInRole('Staff')}">
+                            <a class="nav-link text-white" th:href="@{/admin/home/index}">Quyền admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" th:href="@{/auth/logout}">Đăng xuất</a>
+                        </li>
+                    </th:block>
+                    <th:block th:unless="${#request.remoteUser}">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" aria-current="page" th:href="@{/auth/login/form}">Đăng nhập</a>
+                        </li>
+                    </th:block>
+                </ul>
+                <ul th:if="${#request.remoteUser}" class="nav navbar-nav navbar-right">
+                    <li><a class="text-white" style="text-decoration: none;" href="#">Xin chào: <b id="username">[[${#authentication.principal.username}]]</b> </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
